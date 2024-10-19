@@ -64,7 +64,11 @@ export class DirectoriesService {
     return directory;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} directory`;
+  async remove(id: string) {
+    const directory = await this.findOne(id);
+    if (!directory) {
+      return new NotFoundException();
+    }
+    await this.directoriesRepository.delete(id);
   }
 }
