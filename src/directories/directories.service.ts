@@ -26,8 +26,12 @@ export class DirectoriesService {
     }
   }
 
-  findAll() {
-    return this.directoriesRepository.find();
+  async findAll(page: number, limit: number) {
+    const [results, count] = await this.directoriesRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+    return { count, results };
   }
 
   async findOne(id: string) {
