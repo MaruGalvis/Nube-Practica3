@@ -14,8 +14,8 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('Teslo RESTFul API')
-    .setDescription('Teslo shop endposint')
+    .setTitle('Directories Endpoint')
+    .setDescription('Directories endpoints - Computación en la Nube')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
