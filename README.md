@@ -7,17 +7,6 @@
 
 1. Clonar Proyecto
 
-2. Ejecutar el comando de ``` yarn install ```
+2. Clonar el archivo ``` .env.example``` y renombrarlo a ```.env```
 
-3. Clonar el repositorio ``` .env.example``` y renombrarlo a ```.env```
-
-4. Cambiar las variables de entorno
-
-5. Levantar la base de datos
-
-```bash
-docker-compose up -d
-
-```
-
-6. Levantar: ```yarn start:dev```
+3. Asignar las variables de entorno

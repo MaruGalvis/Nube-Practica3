@@ -11,6 +11,9 @@ services:
       - 3000:3000
     volumes:
       - .:/app
+    depends_on:
+      - db
+    command: sh -c "yarn install && yarn start:dev"
 
   db:
     image: postgres:14.3
