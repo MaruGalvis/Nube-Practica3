@@ -9,7 +9,7 @@ export class CreateDirectoryDto {
     @IsNotEmpty()
     name: string;
 
-    @ApiProperty({ example: 'Descripción del directorio' })
+    @ApiProperty({ example: 'Emails' })
     @IsString({ each: true })
     @IsEmail({},{each:true})
     @IsNotEmpty({ each: true })

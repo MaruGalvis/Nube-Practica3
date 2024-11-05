@@ -9,6 +9,6 @@ export class Directory {
     @Column('text')
     name: string;
 
-    @Column('text')
+    @Column('text', { array: true })
     emails: string[];
 }
