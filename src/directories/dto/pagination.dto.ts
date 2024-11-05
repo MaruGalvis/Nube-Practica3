@@ -6,10 +6,10 @@ export class PaginationDto {
     @ApiProperty()
     @Min(0)
     @Type(() => Number)
-    page: number
+    page: number = 1;
 
     @ApiProperty()
     @IsPositive()
     @Type(() => Number)
-    limit: number
+    limit: number = 10;
 }

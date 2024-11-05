@@ -19,7 +19,11 @@ export class DirectoriesController {
     const { page, limit } = paginationDto;
     const { count, results } = await this.directoriesService.findAll(page, limit);
     const next = page * limit < count ? `http://localhost:3000/directories?page=${page + 1}&limit=${limit}` : null;
-    const previous = page > 1 ? `http://localhost:3000/directories?page=${page - 1}&limit=${limit}` : null;
+    let previous: string = null;
+    // const previous = page > 1 ? `http://localhost:3000/directories?page=${page - 1}&limit=${limit}` : null;
+    if (page > 1 && page * limit < count) {
+      previous = `http://localhost:3000/directories?page=${page + 1}&limit=${limit}`;
+    }
     return {
       count,
       next,

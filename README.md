@@ -7,6 +7,8 @@
 
 1. Clonar Proyecto
 
-2. Clonar el archivo ``` .env.example``` y renombrarlo a ```.env```
+2. Clonar el archivo ``` .env.template``` y renombrarlo a ```.env```
 
 3. Asignar las variables de entorno
+
+4. Ejecutar el comando ```docker-compose up -d``` para levantar el contenedor y empezar a correr la aplicacion.

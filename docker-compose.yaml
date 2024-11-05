@@ -1,20 +1,6 @@
-version: '3'
+version: '3.9'
 
 services:
-  app:
-    image: webserver_jml
-    container_name: WebServer
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - 3000:3000
-    volumes:
-      - .:/app
-    depends_on:
-      - db
-    command: sh -c "yarn install && yarn start:dev"
-
   db:
     image: postgres:14.3
     restart: always
@@ -23,6 +9,45 @@ services:
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
-    container_name: WebServerDB
+      POSTGRES_USER: ${DB_USERNAME}
+    env_file:
+      - .env
+    container_name: DirectoriesDB
     volumes:
       - ./postgres:/var/lib/postgresql/data
+    networks:
+      - jml-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: webserver_jml
+    container_name: DirectoriesServer
+    restart: always
+    ports:
+      - "${PORT}:${PORT}"
+    volumes:
+      - .:/app
+    environment:
+      DB_HOST: db
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - jml-network
+
+networks:
+  jml-network:
+    driver: bridge
