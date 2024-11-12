@@ -27,7 +27,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: webserver_jml
+    image: luiselianmg/practica-3-nube-jml
     container_name: DirectoriesServer
     restart: always
     ports:
@@ -50,7 +50,12 @@ services:
 
 volumes:
   postgres_data:
+    driver: local
+    dirver_opts:
+      type: "nfs"
+      o: "add=nfssrvr01,rw"
+      device: "/var/lib/postgresql/data"
 
 networks:
   jml-network:
-    driver: bridge
+    driver: overlay
