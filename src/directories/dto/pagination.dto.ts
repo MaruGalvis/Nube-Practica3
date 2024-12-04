@@ -7,11 +7,11 @@ export class PaginationDto {
     @IsOptional()
     @Min(0)
     @Type(() => Number)
-    page: number;
+    page: number = 1;
 
     @ApiPropertyOptional({ default: 5 })
     @IsOptional()
     @IsPositive()
     @Type(() => Number)
-    limit: number;
+    limit: number = 5;
 }

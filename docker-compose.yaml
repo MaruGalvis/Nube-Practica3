@@ -4,30 +4,23 @@ services:
   db:
     image: postgres:14.3
     restart: always
-    ports:
-      - "5003:5432"
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USERNAME}
-    env_file:
-      - .env
     container_name: DirectoriesDB
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - jml-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      test: ["CMD", "pg_isready"]
+      start_period: 30s
 
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: webserver_jml
     container_name: DirectoriesServer
     restart: always
     ports:
@@ -36,7 +29,6 @@ services:
       - .:/app
     environment:
       DB_HOST: db
-      DB_PORT: ${DB_PORT}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
@@ -45,6 +37,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
+        restart: true
     networks:
       - jml-network
 
