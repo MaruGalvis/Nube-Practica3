@@ -14,8 +14,10 @@ services:
     networks:
       - jml-network
     healthcheck:
-      test: ["CMD", "pg_isready"]
-      start_period: 30s
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   app:
     image: luiselianmg/practica-3-nube-jml
